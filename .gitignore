@@ -4,6 +4,9 @@ ZZ_API Keys/
 # Virtual Environment
 timber_chatbot_env/
 
+# Claude
+.claude/
+
 # Python
 __pycache__/
 *.py[cod]
