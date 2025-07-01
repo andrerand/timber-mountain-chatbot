@@ -4,7 +4,33 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a Timber Mountain AI Chatbot project containing synthetic A/B test data and a Jupyter notebook-based chatbot implementation. The project is structured as a research and development initiative for marketing optimization.
+This is a Timber Mountain AI Chatbot project designed to build a publicly accessible, proof-of-concept AI chatbot that allows users to ask complex questions about a set of five A/B tests conducted at Timber Mountain.
+
+### Project Goal
+
+The core objective is to create a sophisticated "digital brain" that transforms the A/B test results—currently stored across a metadata spreadsheet and five separate PDF presentations—into a single, intelligent, and interconnected knowledge base.
+
+### Technical Architecture
+
+**Backend Technology (The "Brain"):**
+
+- **Approach**: Hybrid GraphRAG system combining semantic search and structured graph traversal for highly accurate, context-aware answers
+- **Knowledge Base**: Neo4j graph database serving as the central knowledge graph, enriched by:
+  - Structured data from Excel spreadsheet creating factual properties (test owner, dates, primary KPIs) on graph nodes
+  - Unstructured text extracted from PDF presentations creating nodes for key findings and recommendations with established relationships
+- **AI Orchestration**: Agent powered by LangChain and LangGraph for understanding user questions, querying the Neo4j graph, and synthesizing retrieved information
+- **Monitoring**: LangSmith integration for tracing, debugging, and evaluating AI agent performance
+
+**Frontend & Deployment (The "Face"):**
+
+- **User Interface**: Streamlit-based chatbot website with modern AI assistant design (ChatGPT-style)
+- **Development**: Code assistant-accelerated creation from Figma designs
+- **Deployment**: Publicly accessible via Streamlit Community Cloud
+
+**Development Workflow:**
+
+- Local development in Visual Studio Code using Jupyter Notebook for scripting and experimentation
+- Dedicated Python virtual environment for clean dependency management
 
 ## Key Architecture
 
