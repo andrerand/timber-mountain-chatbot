@@ -1,6 +1,6 @@
 'use client';
 
-import { Message as MessageType } from '@/lib/types';
+import { Message as MessageType } from '../lib/types';
 import Image from 'next/image';
 
 interface MessageProps {
