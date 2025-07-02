@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, useRef, useEffect, FormEvent, KeyboardEvent } from 'react';
-import { Message as MessageType } from '../lib/types';
-import { sendMessage } from '../lib/api';
+import { Message as MessageType } from '@/lib/types';
+import { sendMessage } from '@/lib/api';
 import Message from './Message';
 import ThoughtStarters from './ThoughtStarters';
 import TypingIndicator from './TypingIndicator';

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useCallback, ReactNode } from 'react';
-import { Message, ChatSession } from '../lib/types';
+import { Message, ChatSession } from '@/lib/types';
 
 interface ChatContextType {
   currentChat: ChatSession | null;
