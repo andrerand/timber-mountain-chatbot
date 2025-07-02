@@ -1,0 +1,19 @@
+# Core dependencies
+langchain==0.3.15
+langchain-openai==0.2.14
+langchain-neo4j==0.3.0
+langgraph==0.2.63
+neo4j==5.26.0
+python-dotenv==1.0.1
+
+# OpenAI
+openai==1.93.0
+
+# Logging and utilities
+pydantic==2.10.5
+
+# For Modal deployment
+modal==1.0.5
+
+# FastAPI for web endpoints
+fastapi[standard]
