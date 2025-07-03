@@ -2,12 +2,13 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { ChatSession } from '@/lib/types';
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const router = useRouter();
   const [recentChats, setRecentChats] = useState<ChatSession[]>([]);
 
   useEffect(() => {
@@ -72,10 +73,10 @@ export default function Sidebar() {
         </div>
 
         <div style={{paddingLeft: '20px', paddingRight: '20px', marginBottom: '28px'}}>
-          <Link
-            href={`/chat?new=${Date.now()}`}
-            className="flex items-center text-gold hover:opacity-80 transition-opacity py-2"
-            style={{gap: '15px', textDecoration: 'none'}}
+          <button
+            onClick={() => router.push(`/chat?new=${Date.now()}`)}
+            className="flex items-center text-gold hover:opacity-80 transition-opacity py-2 w-full text-left"
+            style={{gap: '15px', textDecoration: 'none', background: 'none', border: 'none', cursor: 'pointer'}}
           >
             <Image
               src="/images/new-chat-icon.png"
@@ -85,7 +86,7 @@ export default function Sidebar() {
               className="opacity-80"
             />
             <span className="text-[13px]">New Chat</span>
-          </Link>
+          </button>
         </div>
 
         {/* Divider line */}

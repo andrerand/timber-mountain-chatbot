@@ -6,13 +6,13 @@ import { sendMessage } from '@/lib/api';
 import Message from './Message';
 import ThoughtStarters from './ThoughtStarters';
 import TypingIndicator from './TypingIndicator';
-import Image from 'next/image';
 
 export default function ChatInterface() {
   const [messages, setMessages] = useState<MessageType[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
+  const [requestStartTime, setRequestStartTime] = useState<Date | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -62,17 +62,22 @@ export default function ChatInterface() {
     setMessages((prev) => [...prev, userMessage]);
     setInput('');
     setIsLoading(true);
+    setRequestStartTime(new Date());
 
     try {
       // Send to API
       const response = await sendMessage(query);
       
       // Add AI response
+      const endTime = new Date();
+      const elapsedTime = requestStartTime ? (endTime.getTime() - requestStartTime.getTime()) / 1000 : 0;
+      
       const aiMessage: MessageType = {
         id: crypto.randomUUID(),
         role: 'assistant',
         content: response,
-        timestamp: new Date(),
+        timestamp: endTime,
+        elapsedTime: elapsedTime,
       };
       
       setMessages((prev) => [...prev, aiMessage]);
@@ -81,6 +86,7 @@ export default function ChatInterface() {
       console.error('Chat error:', error);
     } finally {
       setIsLoading(false);
+      setRequestStartTime(null);
       inputRef.current?.focus();
     }
   };
@@ -173,7 +179,7 @@ export default function ChatInterface() {
               {messages.map((message) => (
                 <Message key={message.id} message={message} />
               ))}
-              {isLoading && <TypingIndicator />}
+              {isLoading && <TypingIndicator startTime={requestStartTime} />}
               <div ref={messagesEndRef} />
             </div>
             

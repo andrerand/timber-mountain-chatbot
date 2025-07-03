@@ -36,15 +36,31 @@ export default function Message({ message }: MessageProps) {
   return (
     <div className="py-6">
       <div>
-        <p className="text-sm" style={{
-          color: '#FFFFFF',
-          fontFamily: 'PT Serif',
-          fontSize: '15px',
-          fontWeight: 'bold',
+        <div style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
           marginBottom: '40px'
         }}>
-          🎢&nbsp;&nbsp;&nbsp;AI Response:
-        </p>
+          <p className="text-sm" style={{
+            color: '#FFFFFF',
+            fontFamily: 'PT Serif',
+            fontSize: '15px',
+            fontWeight: 'bold'
+          }}>
+            🎢&nbsp;&nbsp;&nbsp;AI Response:
+          </p>
+          {message.elapsedTime !== undefined && (
+            <p className="text-sm" style={{
+              color: '#333537',
+              fontFamily: 'PT Serif',
+              fontSize: '15px',
+              fontWeight: 'bold'
+            }}>
+              Time Elapsed: {message.elapsedTime.toFixed(2)}
+            </p>
+          )}
+        </div>
         <div className="text-sm" style={{fontFamily: 'PT Serif', lineHeight: '1.6'}}>
           <p className="whitespace-pre-wrap">{message.content}</p>
         </div>

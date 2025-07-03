@@ -3,6 +3,7 @@ export interface Message {
   role: 'user' | 'assistant';
   content: string;
   timestamp: Date;
+  elapsedTime?: number; // Time in seconds it took to generate the response
 }
 
 export interface ChatSession {
