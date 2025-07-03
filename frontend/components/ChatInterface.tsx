@@ -13,6 +13,7 @@ export default function ChatInterface() {
   const [isLoading, setIsLoading] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const [requestStartTime, setRequestStartTime] = useState<Date | null>(null);
+  const [finalElapsedTime, setFinalElapsedTime] = useState<number | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -63,6 +64,7 @@ export default function ChatInterface() {
     setInput('');
     setIsLoading(true);
     setRequestStartTime(new Date());
+    setFinalElapsedTime(null); // Clear any previous final time
 
     try {
       // Send to API
@@ -80,13 +82,23 @@ export default function ChatInterface() {
         elapsedTime: elapsedTime,
       };
       
+      // Store final elapsed time before clearing requestStartTime
+      setFinalElapsedTime(elapsedTime);
+      // Batch state updates to prevent intermediate renders
+      setIsLoading(false);
+      setRequestStartTime(null);
+      
+      // Add the message and then clear the final elapsed time after a brief delay
       setMessages((prev) => [...prev, aiMessage]);
+      setTimeout(() => {
+        setFinalElapsedTime(null);
+      }, 100);
     } catch (error) {
       // Error handling is done in the API client
       console.error('Chat error:', error);
-    } finally {
       setIsLoading(false);
       setRequestStartTime(null);
+    } finally {
       inputRef.current?.focus();
     }
   };
@@ -179,12 +191,17 @@ export default function ChatInterface() {
               {messages.map((message) => (
                 <Message key={message.id} message={message} />
               ))}
-              {isLoading && <TypingIndicator startTime={requestStartTime} />}
+              <TypingIndicator 
+                startTime={requestStartTime} 
+                isLoading={isLoading}
+                visible={!!(isLoading || requestStartTime || finalElapsedTime)}
+                finalTime={finalElapsedTime}
+              />
               <div ref={messagesEndRef} />
             </div>
             
             {/* Input Field - Same style as New Chat page */}
-            <div className="w-[750px] mx-auto" style={{marginTop: '60px', marginBottom: '60px'}}>
+            <div className="w-[750px] mx-auto" style={{marginTop: '-7px', marginBottom: '60px'}}>
               <form onSubmit={handleSubmit}>
                 <div className="relative">
                   <input

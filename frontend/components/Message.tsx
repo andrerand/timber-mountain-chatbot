@@ -61,7 +61,7 @@ export default function Message({ message }: MessageProps) {
             </p>
           )}
         </div>
-        <div className="text-sm" style={{fontFamily: 'PT Serif', lineHeight: '1.6'}}>
+        <div className="text-sm" style={{fontFamily: 'PT Serif', lineHeight: '1.6', paddingBottom: '50px'}}>
           <p className="whitespace-pre-wrap">{message.content}</p>
         </div>
       </div>
