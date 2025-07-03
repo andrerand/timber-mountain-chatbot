@@ -2,12 +2,13 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { ChatSession } from '@/lib/types';
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const router = useRouter();
   const [recentChats, setRecentChats] = useState<ChatSession[]>([]);
 
   useEffect(() => {
@@ -32,78 +33,90 @@ export default function Sidebar() {
   const isActive = (path: string) => pathname === path;
 
   return (
-    <aside className="fixed left-0 top-0 h-full w-[250px] bg-sidebar border-r border-[#3d3d3d]">
+    <aside className="fixed left-0 top-0 h-full w-[250px]" style={{backgroundColor: '#282A2C'}}>
       {/* Logo */}
-      <div className="p-6 border-b border-[#3d3d3d]">
+      <div style={{paddingLeft: '20px', paddingRight: '20px', paddingTop: '30px', paddingBottom: '35px'}}>
         <Link href="/" className="block">
           <Image
             src="/images/timber-mountain-logo.png"
             alt="Timber Mountain"
-            width={180}
+            width={169}
             height={60}
-            className="w-auto h-12"
+            className="w-[169px] h-auto"
             priority
           />
         </Link>
       </div>
 
       {/* Navigation */}
-      <nav className="p-4">
-        <Link
-          href="/"
-          className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-hover hover-gold ${
-            isActive('/') ? 'bg-[#3d3d3d] text-gold' : ''
-          }`}
-        >
-          <Image
-            src="/images/new-chat-icon.png"
-            alt="New Chat"
-            width={20}
-            height={20}
-            className="opacity-80"
-          />
-          <span className="font-medium">New Chat</span>
-        </Link>
+      <nav>
+        <div style={{paddingLeft: '20px', paddingRight: '20px', marginBottom: '28px'}}>
+          <Link
+            href="/"
+            className="flex items-center text-gold hover:opacity-80 transition-opacity py-2"
+            style={{gap: '15px', textDecoration: 'none'}}
+          >
+            <Image
+              src="/images/tree-icon-brown.png"
+              alt="About"
+              width={17}
+              height={20}
+              className="opacity-80"
+            />
+            <span className="text-[13px]">About Timber Mountain</span>
+          </Link>
+        </div>
 
-        <Link
-          href="/about"
-          className={`flex items-center gap-3 px-4 py-3 mt-2 rounded-lg transition-hover hover-gold ${
-            isActive('/about') ? 'bg-[#3d3d3d] text-gold' : ''
-          }`}
-        >
-          <Image
-            src="/images/tree-icon-brown.png"
-            alt="About"
-            width={20}
-            height={20}
-            className="opacity-80"
-          />
-          <span className="font-medium">About Timber Mountain</span>
-        </Link>
+        {/* Divider line */}
+        <div style={{paddingLeft: '20px', paddingRight: '20px', marginBottom: '28px'}}>
+          <div style={{borderBottom: '1px solid #4d4d4d'}}></div>
+        </div>
+
+        <div style={{paddingLeft: '20px', paddingRight: '20px', marginBottom: '28px'}}>
+          <button
+            onClick={() => router.push(`/chat?new=${Date.now()}`)}
+            className="flex items-center text-gold hover:opacity-80 transition-opacity py-2 w-full text-left"
+            style={{gap: '15px', textDecoration: 'none', background: 'none', border: 'none', cursor: 'pointer'}}
+          >
+            <Image
+              src="/images/new-chat-icon.png"
+              alt="New Chat"
+              width={15}
+              height={15}
+              className="opacity-80"
+            />
+            <span className="text-[13px]">New Chat</span>
+          </button>
+        </div>
+
+        {/* Divider line */}
+        <div style={{paddingLeft: '20px', paddingRight: '20px', marginBottom: '28px'}}>
+          <div style={{borderBottom: '1px solid #4d4d4d'}}></div>
+        </div>
       </nav>
 
       {/* Recent Chats */}
-      <div className="px-4 mt-8">
-        <div className="flex items-center gap-2 px-4 mb-3 text-secondary">
+      <div style={{paddingLeft: '20px', paddingRight: '20px'}}>
+        <div className="flex items-center text-gold" style={{gap: '15px', marginBottom: '28px'}}>
           <Image
             src="/images/recent-chats-icon.png"
             alt="Recent Chats"
-            width={16}
-            height={16}
+            width={12}
+            height={12}
             className="opacity-60"
           />
-          <span className="text-sm font-medium">Recent Chats</span>
+          <span className="text-[13px]">Recent Chats</span>
         </div>
         
-        <div className="space-y-1">
+        <div className="space-y-4">
           {recentChats.length === 0 ? (
-            <p className="px-4 py-2 text-sm text-secondary">No recent chats</p>
+            <p className="text-[13px] text-light-gray">No recent chats</p>
           ) : (
             recentChats.slice(0, 10).map((chat) => (
               <Link
                 key={chat.id}
                 href={`/chat/${chat.id}`}
-                className="block px-4 py-2 text-sm rounded-lg truncate transition-hover hover-gold hover:bg-[#3d3d3d]"
+                className="block text-[13px] text-light-gray truncate hover:opacity-80 transition-opacity"
               >
                 {chat.title}
               </Link>
@@ -112,18 +125,6 @@ export default function Sidebar() {
         </div>
       </div>
 
-      {/* Footer */}
-      <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-[#3d3d3d]">
-        <div className="flex items-center justify-center gap-2 text-xs text-secondary">
-          <Image
-            src="/images/roller-coaster-emoji.png"
-            alt="Roller Coaster"
-            width={16}
-            height={16}
-          />
-          <span>Powered by AI</span>
-        </div>
-      </div>
     </aside>
   );
 }
