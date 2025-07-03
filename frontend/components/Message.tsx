@@ -1,6 +1,7 @@
 'use client';
 
 import { Message as MessageType } from '@/lib/types';
+import ReactMarkdown from 'react-markdown';
 
 interface MessageProps {
   message: MessageType;
@@ -61,8 +62,21 @@ export default function Message({ message }: MessageProps) {
             </p>
           )}
         </div>
-        <div className="text-sm" style={{fontFamily: 'PT Serif', lineHeight: '1.6', paddingBottom: '50px'}}>
-          <p className="whitespace-pre-wrap">{message.content}</p>
+        <div className="text-sm markdown-content" style={{fontFamily: 'PT Serif', lineHeight: '1.6', paddingBottom: '50px'}}>
+          <ReactMarkdown
+            components={{
+              h1: ({children}) => <h1 style={{fontSize: '24px', fontWeight: 'bold', marginBottom: '16px', marginTop: '24px'}}>{children}</h1>,
+              h2: ({children}) => <h2 style={{fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', marginTop: '20px'}}>{children}</h2>,
+              h3: ({children}) => <h3 style={{fontSize: '18px', fontWeight: 'bold', marginBottom: '10px', marginTop: '16px'}}>{children}</h3>,
+              p: ({children}) => <p style={{marginBottom: '12px'}}>{children}</p>,
+              ul: ({children}) => <ul style={{marginBottom: '12px', paddingLeft: '20px'}}>{children}</ul>,
+              li: ({children}) => <li style={{marginBottom: '4px', listStyle: 'disc'}}>{children}</li>,
+              strong: ({children}) => <strong style={{fontWeight: 'bold'}}>{children}</strong>,
+              a: ({children, href}) => <a href={href} style={{color: '#D5BBA2', textDecoration: 'underline'}} target="_blank" rel="noopener noreferrer">{children}</a>,
+            }}
+          >
+            {message.content}
+          </ReactMarkdown>
         </div>
       </div>
     </div>
