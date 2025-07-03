@@ -39,9 +39,9 @@ export default function Sidebar() {
           <Image
             src="/images/timber-mountain-logo.png"
             alt="Timber Mountain"
-            width={180}
+            width={169}
             height={60}
-            className="w-auto h-12"
+            className="w-[169px] h-auto"
             priority
           />
         </Link>
