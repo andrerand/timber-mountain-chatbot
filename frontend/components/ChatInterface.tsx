@@ -104,7 +104,7 @@ export default function ChatInterface() {
         {messages.length === 0 ? (
           <div className="h-full flex items-center justify-center p-8">
             <div>
-              <div className="w-[680px] mx-auto" style={{marginBottom: '50px'}}>
+              <div className="w-[680px] mx-auto" style={{marginBottom: '60px'}}>
                 <h1 className="font-bold mb-2 text-left" style={{fontWeight: 'bold', fontSize: '27px', lineHeight: '2.5rem'}}>
                   Hello, Adventurer.
                 </h1>
@@ -114,7 +114,7 @@ export default function ChatInterface() {
               </div>
               
               {/* Input Field */}
-              <div className="w-[750px] mx-auto" style={{marginBottom: '50px'}}>
+              <div className="w-[750px] mx-auto" style={{marginBottom: '60px'}}>
                 <form onSubmit={handleSubmit}>
                   <div className="relative">
                     <input
