@@ -19,8 +19,10 @@ Build a publicly accessible chatbot that enables users to explore complex A/B te
 - **LangSmith**: Performance monitoring, tracing, and debugging throughout development
 
 **Frontend & Deployment (The "Face"):**
-- **Streamlit UI**: Modern ChatGPT-style interface built from Figma designs
-- **Streamlit Community Cloud**: Public deployment for universal access
+- **Next.js/React UI**: Modern ChatGPT-style interface built from Figma designs
+- **TypeScript & Tailwind CSS**: Type-safe development with utility-first styling
+- **Vercel Deployment**: Frontend hosted on Vercel for optimal performance
+- **Modal Backend**: Serverless Python API deployment
 - **Code Assistant Integration**: Accelerated development workflow
 
 ## Key Features
@@ -44,8 +46,19 @@ Build a publicly accessible chatbot that enables users to explore complex A/B te
 ├── 1 - Web Design/Images/          # Brand assets and UI elements
 ├── 2 - Synthetic Metadata/         # A/B test metadata and reference docs
 ├── 3 - Synthetic A:B Test Results/ # Test content outlines and presentations
-├── 4 - Python Scripts/             # Main chatbot implementation
-└── CLAUDE.md                       # AI assistant guidance
+├── 4 - Python Scripts/             # Jupyter notebook for data processing
+├── backend/                        # Python API service (Modal deployment)
+│   ├── agent.py                    # LangGraph agent implementation
+│   ├── app.py                      # Main application logic
+│   ├── database.py                 # Neo4j connection and vector store
+│   └── modal_app.py                # Modal deployment entry point
+├── frontend/                       # Next.js web application
+│   ├── app/                        # Next.js app directory
+│   ├── components/                 # React components
+│   └── lib/                        # API client and utilities
+├── processed_documents.json        # Extracted and processed data
+├── CLAUDE.md                       # AI assistant guidance
+└── README.md                       # This file
 ```
 
 ## Technical Stack
@@ -55,24 +68,30 @@ Build a publicly accessible chatbot that enables users to explore complex A/B te
 - **AI Orchestration**: LangChain + LangGraph for agent workflows
 - **Language Models**: OpenAI API for natural language processing
 - **Monitoring**: LangSmith for tracing, debugging, and evaluation
-- **Data Processing**: Python scripts for Excel/PDF content extraction
+- **Data Processing**: Jupyter notebook for Excel/PDF content extraction
+- **API Deployment**: Modal serverless platform for scalable backend
 
 **Frontend ("The Face"):**
-- **UI Framework**: Streamlit for rapid web app development
+- **UI Framework**: Next.js 15 with React 19 for modern web development
+- **Type Safety**: TypeScript for robust, maintainable code
+- **Styling**: Tailwind CSS v4 for utility-first design
+- **State Management**: React Context API for chat state
 - **Design**: Modern ChatGPT-style interface from Figma mockups
-- **Deployment**: Streamlit Community Cloud for public access
+- **Deployment**: Vercel for optimized frontend hosting
 
 **Development Environment:**
 - **IDE**: Visual Studio Code with Jupyter notebook integration
 - **Environment**: Isolated Python virtual environment (`timber_chatbot_env/`)
 - **Version Control**: Git with GitHub integration
+- **Package Management**: npm for frontend, pip for backend
 
 ## Getting Started
 
 ### Prerequisites
 
-- Python 3.8+
-- Jupyter Notebook
+- Python 3.11+ (for backend)
+- Node.js 18+ (for frontend)
+- Jupyter Notebook (for data processing)
 - API access to OpenAI, LangSmith, and Neo4j
 
 ### Installation
@@ -83,21 +102,74 @@ Build a publicly accessible chatbot that enables users to explore complex A/B te
    cd timber-mountain-chatbot
    ```
 
-2. Set up the virtual environment:
+### Data Processing Setup
+
+1. Activate the Python virtual environment:
    ```bash
-   # Activate the existing virtual environment
    source timber_chatbot_env/bin/activate  # On macOS/Linux
    # or
    timber_chatbot_env\Scripts\activate     # On Windows
    ```
 
-3. Configure API keys:
-   - Create your API key files in the `ZZ_API Keys/` directory (excluded from version control)
+2. Configure API keys:
+   - The project uses a `.env` file in the root directory for API keys
    - Required: OpenAI API Key, LangSmith API Key, Neo4j credentials
+   - Ensure your `.env` file contains all necessary environment variables
 
-4. Launch Jupyter and open the main notebook:
+3. Run the data processing notebook:
    ```bash
    jupyter notebook "4 - Python Scripts/Timber Mountain AI Chatbot.ipynb"
+   ```
+
+### Backend Setup
+
+1. Navigate to the backend directory:
+   ```bash
+   cd backend
+   ```
+
+2. Create and activate a virtual environment:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On macOS/Linux
+   # or
+   venv\Scripts\activate     # On Windows
+   ```
+
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. Set up environment variables (copy .env.example to .env and fill in values)
+
+5. Deploy to Modal:
+   ```bash
+   modal deploy modal_app.py
+   ```
+
+### Frontend Setup
+
+1. Navigate to the frontend directory:
+   ```bash
+   cd frontend
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Run the development server:
+   ```bash
+   npm run dev
+   ```
+
+4. Access the application at `http://localhost:3000`
+
+5. Deploy to Vercel:
+   ```bash
+   vercel
    ```
 
 ## Usage

@@ -23,9 +23,10 @@ The core objective is to create a sophisticated "digital brain" that transforms 
 
 **Frontend & Deployment (The "Face"):**
 
-- **User Interface**: Streamlit-based chatbot website with modern AI assistant design (ChatGPT-style)
+- **User Interface**: Next.js/React-based chatbot website with modern AI assistant design (ChatGPT-style)
+- **Technologies**: TypeScript, Tailwind CSS for styling, React Context for state management
 - **Development**: Code assistant-accelerated creation from Figma designs
-- **Deployment**: Publicly accessible via Streamlit Community Cloud
+- **Deployment**: Frontend on Vercel, Backend API on Modal (serverless platform)
 
 **Development Workflow:**
 
@@ -34,7 +35,9 @@ The core objective is to create a sophisticated "digital brain" that transforms 
 
 ## Key Architecture
 
-- **Main Implementation**: `4 - Python Scripts/Timber Mountain AI Chatbot.ipynb` - Jupyter notebook containing the chatbot logic
+- **Data Processing**: `4 - Python Scripts/Timber Mountain AI Chatbot.ipynb` - Jupyter notebook for initial data extraction and Neo4j population
+- **Backend API**: `backend/` - Python API service with LangChain/LangGraph agent, deployed on Modal
+- **Frontend Application**: `frontend/` - Next.js web application with React components, deployed on Vercel
 - **Environment**: `timber_chatbot_env/` - Python virtual environment for the project
 - **Data Sources**: 
   - `2 - Synthetic Metadata/` - Contains A/B test metadata and reference documents
@@ -56,11 +59,22 @@ API keys are stored in `ZZ_API Keys/` directory:
 
 ## Working with the Chatbot
 
-The primary chatbot implementation is in the Jupyter notebook. When working with this project:
+The project has three main components:
 
-1. Activate the virtual environment from `timber_chatbot_env/`
-2. Launch Jupyter to work with `Timber Mountain AI Chatbot.ipynb`
-3. The chatbot appears to integrate with OpenAI, LangSmith, and Neo4j services
+### 1. Data Processing (Jupyter Notebook)
+- Use `Timber Mountain AI Chatbot.ipynb` for initial data extraction and Neo4j graph population
+- Processes PDFs and Excel metadata into the knowledge graph
+
+### 2. Backend Development
+- Navigate to `backend/` directory
+- Python API with LangChain/LangGraph agent
+- Deploy to Modal using `modal deploy modal_app.py`
+
+### 3. Frontend Development
+- Navigate to `frontend/` directory
+- Install dependencies: `npm install`
+- Run development server: `npm run dev`
+- Deploy to Vercel using `vercel` CLI or GitHub integration
 
 ## Data Structure
 
