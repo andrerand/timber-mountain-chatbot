@@ -12,6 +12,7 @@ export default function ChatInterface() {
   const [messages, setMessages] = useState<MessageType[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -122,15 +123,20 @@ export default function ChatInterface() {
                       value={input}
                       onChange={(e) => setInput(e.target.value)}
                       onKeyDown={handleKeyDown}
+                      onFocus={() => setIsFocused(true)}
+                      onBlur={() => setIsFocused(false)}
                       placeholder="Ask AI..."
                       disabled={isLoading}
                       className="w-full h-[60px] rounded-full text-white placeholder-gray-500"
                       style={{
                         backgroundColor: 'transparent',
-                        border: '0.5px solid #333537',
+                        border: isFocused ? '0.5px solid #D5BBA2' : '0.5px solid #333537',
                         paddingLeft: '35px',
                         paddingRight: '70px',
-                        fontSize: '16px'
+                        fontSize: '14px',
+                        fontFamily: 'PT Serif',
+                        color: '#FFFFFF',
+                        outline: 'none'
                       }}
                     />
                     <button
