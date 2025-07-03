@@ -51,9 +51,9 @@ export default function Sidebar() {
       <nav>
         <div style={{paddingLeft: '20px', paddingRight: '20px', marginBottom: '28px'}}>
           <Link
-            href="/about"
+            href="/"
             className="flex items-center text-gold hover:opacity-80 transition-opacity py-2"
-            style={{gap: '15px'}}
+            style={{gap: '15px', textDecoration: 'none'}}
           >
             <Image
               src="/images/tree-icon-brown.png"
@@ -73,9 +73,9 @@ export default function Sidebar() {
 
         <div style={{paddingLeft: '20px', paddingRight: '20px', marginBottom: '28px'}}>
           <Link
-            href="/"
+            href="/chat"
             className="flex items-center text-gold hover:opacity-80 transition-opacity py-2"
-            style={{gap: '15px'}}
+            style={{gap: '15px', textDecoration: 'none'}}
           >
             <Image
               src="/images/new-chat-icon.png"
