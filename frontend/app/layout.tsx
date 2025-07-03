@@ -23,7 +23,7 @@ export default function RootLayout({
       <body className={ptSerif.className}>
         <div className="flex h-screen">
           <Sidebar />
-          <main className="flex-1 ml-[250px] overflow-hidden">
+          <main className="flex-1 ml-[250px] overflow-y-auto">
             {children}
           </main>
         </div>
