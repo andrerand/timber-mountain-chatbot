@@ -168,56 +168,69 @@ export default function ChatInterface() {
             </div>
           </div>
         ) : (
-          <div className="max-w-4xl mx-auto">
-            {messages.map((message) => (
-              <Message key={message.id} message={message} />
-            ))}
-            {isLoading && <TypingIndicator />}
-            <div ref={messagesEndRef} />
-          </div>
+          <>
+            <div className="w-[680px] mx-auto" style={{paddingTop: '30px', paddingBottom: '32px'}}>
+              {messages.map((message) => (
+                <Message key={message.id} message={message} />
+              ))}
+              {isLoading && <TypingIndicator />}
+              <div ref={messagesEndRef} />
+            </div>
+            
+            {/* Input Field - Same style as New Chat page */}
+            <div className="w-[750px] mx-auto" style={{marginTop: '60px', marginBottom: '60px'}}>
+              <form onSubmit={handleSubmit}>
+                <div className="relative">
+                  <input
+                    ref={inputRef}
+                    type="text"
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    onFocus={() => setIsFocused(true)}
+                    onBlur={() => setIsFocused(false)}
+                    placeholder="Ask AI..."
+                    disabled={isLoading}
+                    className="w-full h-[60px] rounded-full text-white placeholder-gray-500"
+                    style={{
+                      backgroundColor: 'transparent',
+                      border: isFocused ? '0.5px solid #D5BBA2' : '0.5px solid #333537',
+                      paddingLeft: '35px',
+                      paddingRight: '70px',
+                      fontSize: '14px',
+                      fontFamily: 'PT Serif',
+                      color: '#FFFFFF',
+                      outline: 'none'
+                    }}
+                  />
+                  <button
+                    type="submit"
+                    disabled={!input.trim() || isLoading}
+                    className="absolute top-1/2 -translate-y-1/2 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                    style={{
+                      right: '15px',
+                      width: '32px',
+                      height: '32px',
+                      borderRadius: '50%',
+                      backgroundColor: input.trim() && !isLoading ? '#FFFFFF' : '#6B6B6B',
+                      color: input.trim() && !isLoading ? '#6B6B6B' : '#FFFFFF',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '18px',
+                      fontWeight: 'bold',
+                      border: 'none'
+                    }}
+                  >
+                    ↑
+                  </button>
+                </div>
+              </form>
+            </div>
+          </>
         )}
       </div>
 
-      {/* Input Area - Only show when messages exist */}
-      {messages.length > 0 && (
-        <div className="border-t border-[#3d3d3d] p-4">
-          <form onSubmit={handleSubmit} className="max-w-4xl mx-auto">
-            <div className="relative">
-              <input
-                ref={inputRef}
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyDown={handleKeyDown}
-                placeholder="Ask AI..."
-                disabled={isLoading}
-                className="w-full px-4 py-3 pr-12 bg-input rounded-lg border border-[#3d3d3d] focus:outline-none focus:border-[#d4a574] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-              />
-              <button
-                type="submit"
-                disabled={!input.trim() || isLoading}
-                className="absolute right-2 top-1/2 -translate-y-1/2 p-2 text-secondary hover:text-gold disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-              >
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 20 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M2.925 10.625L7.5 8.75L10 10L11.25 7.5L9.375 2.925C9.125 2.3 9.875 1.8 10.425 2.175L17.075 7.5C17.575 7.875 17.575 8.625 17.05 8.975L3.05 17.975C2.475 18.35 1.775 17.825 1.975 17.175L4.5 10L2.925 10.625Z"
-                    fill="currentColor"
-                  />
-                </svg>
-              </button>
-            </div>
-            <p className="text-xs text-secondary text-center mt-2">
-              Press Enter to send • Shift+Enter for new line
-            </p>
-          </form>
-        </div>
-      )}
     </div>
   );
 }
