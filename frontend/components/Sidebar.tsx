@@ -108,7 +108,7 @@ export default function Sidebar() {
           <span className="text-[13px]">Recent Chats</span>
         </div>
         
-        <div className="space-y-4">
+        <div>
           {recentChats.length === 0 ? (
             <p className="text-[13px] text-light-gray">No recent chats</p>
           ) : (
@@ -117,6 +117,7 @@ export default function Sidebar() {
                 key={chat.id}
                 href={`/chat/${chat.id}`}
                 className="block text-[13px] text-light-gray truncate hover:opacity-80 transition-opacity"
+                style={{paddingTop: '7px', paddingBottom: '7px'}}
               >
                 {chat.title}
               </Link>
