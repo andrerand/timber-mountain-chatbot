@@ -7,11 +7,13 @@ import { Suspense } from 'react';
 
 function ChatContent() {
   const searchParams = useSearchParams();
-  const chatKey = searchParams.get('new') || 'default';
+  const newChat = searchParams.get('new');
+  const sessionId = searchParams.get('session');
+  const chatKey = newChat || sessionId || 'default';
   
   return (
     <ChatProvider>
-      <ChatInterface key={chatKey} />
+      <ChatInterface key={chatKey} sessionId={sessionId || undefined} />
     </ChatProvider>
   );
 }

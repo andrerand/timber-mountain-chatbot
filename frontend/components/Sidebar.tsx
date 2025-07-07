@@ -115,7 +115,7 @@ export default function Sidebar() {
             recentChats.slice(0, 10).map((chat) => (
               <Link
                 key={chat.id}
-                href={`/chat/${chat.id}`}
+                href={`/chat?session=${chat.id}`}
                 className="block text-[13px] text-light-gray truncate hover:opacity-80 transition-opacity"
                 style={{paddingTop: '7px', paddingBottom: '7px'}}
               >
