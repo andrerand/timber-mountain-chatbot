@@ -7,15 +7,35 @@ import Message from './Message';
 import ThoughtStarters from './ThoughtStarters';
 import TypingIndicator from './TypingIndicator';
 
-export default function ChatInterface() {
+interface ChatInterfaceProps {
+  sessionId?: string;
+}
+
+export default function ChatInterface({ sessionId: propsSessionId }: ChatInterfaceProps) {
   const [messages, setMessages] = useState<MessageType[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const [requestStartTime, setRequestStartTime] = useState<Date | null>(null);
   const [finalElapsedTime, setFinalElapsedTime] = useState<number | null>(null);
+  const [sessionId, setSessionId] = useState<string | null>(propsSessionId || null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  
+  // Load existing session if sessionId is provided
+  useEffect(() => {
+    if (propsSessionId) {
+      const stored = localStorage.getItem('recentChats');
+      if (stored) {
+        const recentChats = JSON.parse(stored);
+        const existingSession = recentChats.find((chat: any) => chat.id === propsSessionId);
+        if (existingSession && existingSession.messages) {
+          setMessages(existingSession.messages);
+          setSessionId(propsSessionId);
+        }
+      }
+    }
+  }, [propsSessionId]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -27,24 +47,37 @@ export default function ChatInterface() {
 
   useEffect(() => {
     // Save messages to localStorage when they change
-    if (messages.length > 0) {
+    if (messages.length > 0 && sessionId) {
+      const stored = localStorage.getItem('recentChats');
+      const recentChats = stored ? JSON.parse(stored) : [];
+      
+      // Check if this session already exists
+      const existingIndex = recentChats.findIndex((chat: any) => chat.id === sessionId);
+      
       const chatSession = {
-        id: crypto.randomUUID(),
+        id: sessionId,
         title: messages[0].content.slice(0, 50) + '...',
         messages,
-        createdAt: new Date(),
+        createdAt: existingIndex >= 0 ? recentChats[existingIndex].createdAt : new Date(),
         updatedAt: new Date(),
       };
       
-      const stored = localStorage.getItem('recentChats');
-      const recentChats = stored ? JSON.parse(stored) : [];
-      const updated = [chatSession, ...recentChats.slice(0, 9)];
+      let updated;
+      if (existingIndex >= 0) {
+        // Update existing session
+        recentChats[existingIndex] = chatSession;
+        updated = recentChats;
+      } else {
+        // Add new session
+        updated = [chatSession, ...recentChats.slice(0, 9)];
+      }
+      
       localStorage.setItem('recentChats', JSON.stringify(updated));
       
       // Trigger sidebar update
       window.dispatchEvent(new Event('storage'));
     }
-  }, [messages]);
+  }, [messages, sessionId]);
 
   const handleSubmit = async (e?: FormEvent) => {
     e?.preventDefault();
@@ -52,6 +85,11 @@ export default function ChatInterface() {
     const query = input.trim();
     if (!query || isLoading) return;
 
+    // Create session ID if this is the first message
+    if (!sessionId) {
+      setSessionId(crypto.randomUUID());
+    }
+    
     // Add user message
     const userMessage: MessageType = {
       id: crypto.randomUUID(),
