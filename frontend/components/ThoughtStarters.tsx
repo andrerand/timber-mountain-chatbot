@@ -7,7 +7,7 @@ interface ThoughtStartersProps {
 const starterQuestions = [
   "List all of the A/B tests we have run.",
   "Which A/B test drove the largest conversion lift?",
-  "What was the impact of customizing Timber Mountain home for international visitors?",
+  "What was the impact of customizing Timber Mountain homepage for international visitors?",
   "Why didn't changing the CTAs from \"Learn More\" to \"Explore More\" lift engagement rates?",
   "Describe the variants in the Homepage Special Offers Carousel Test.",
 ];
