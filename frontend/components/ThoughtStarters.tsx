@@ -5,11 +5,11 @@ interface ThoughtStartersProps {
 }
 
 const starterQuestions = [
-  "What were the results of the AI Trip Planner test?",
-  "Which A/B test had the highest revenue impact?",
-  "Tell me about the homepage personalization test.",
-  "What was the outcome of the special offers countdown timer?",
-  "How did the booking flow consolidation test perform?",
+  "List all of the A/B tests we have run.",
+  "Which A/B test drove the largest conversion lift?",
+  "What was the impact of customizing Timber Mountain home for international visitors?",
+  "Why didn't changing the CTAs from \"Learn More\" to \"Explore More\" lift engagement rates?",
+  "Describe the variants in the Homepage Special Offers Carousel Test.",
 ];
 
 export default function ThoughtStarters({ onSelect }: ThoughtStartersProps) {
