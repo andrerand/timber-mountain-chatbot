@@ -2,6 +2,10 @@
 
 A publicly accessible, proof-of-concept AI chatbot that allows users to ask complex questions about five A/B tests conducted at Timber Mountain.
 
+Click Here to View the Prototype:
+https://timber-mountain-chatbot.vercel.app
+
+
 ## Project Overview
 
 This project creates a sophisticated "digital brain" that transforms A/B test results—currently stored across a metadata spreadsheet and five separate PDF presentations—into a single, intelligent, and interconnected knowledge base.
